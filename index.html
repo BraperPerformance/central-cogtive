@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Central do Cliente · Cogtive</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0C1217;          /* Dark Blue  */
+  --deep:#01284C;        /* Deep Blue  */
+  --mid:#0C487F;         /* Mid Blue   */
+  --accent:#0D81CE;      /* Light Blue */
+  --text:#FBF9F0;        /* Off White  */
+  --muted:#C3C3C3;       /* Light Gray */
+  --panel:#101B26;
+  --line:rgba(13,129,206,.22);
+  --radius:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.display{font-family:'Inter Tight','Inter',sans-serif}
+a{color:var(--accent)}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+img{max-width:100%;height:auto}
+
+/* ============ ELEMENTO ASSINATURA: o elo Cogtive ============ */
+/* Duas barras arredondadas com o vão central — derivado do símbolo da marca */
+.elo{display:inline-flex;flex-direction:column;gap:5px;width:34px;flex-shrink:0}
+.elo span{display:block;height:9px;border-radius:5px 5px 3px 3px;background:var(--accent)}
+.elo span:last-child{border-radius:3px 3px 5px 5px}
+.elo--muted span{background:var(--mid)}
+
+/* ============ LOGIN ============ */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+  background:radial-gradient(ellipse 90% 60% at 50% -10%, rgba(1,40,76,.85), transparent 60%), var(--bg)}
+.login-card{width:100%;max-width:420px;background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius);padding:44px 38px 38px}
+.login-card .logo{display:block;width:220px;margin:0 auto 8px}
+.login-card .sub{color:var(--muted);text-align:center;font-size:.95rem;margin-bottom:32px;letter-spacing:.02em}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.field input{width:100%;background:#0A1420;border:1px solid var(--line);border-radius:9px;
+  color:var(--text);font-size:1rem;padding:12px 14px;font-family:'Inter',sans-serif}
+.field input::placeholder{color:#5c6b78}
+.field input:focus{outline:2px solid var(--accent);outline-offset:0;border-color:transparent}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:9px;
+  background:var(--accent);color:#fff;font-weight:600;font-size:1rem;padding:13px 22px;width:100%;
+  transition:background .15s ease}
+.btn:hover{background:#0A6DB0}
+.login-err{display:none;background:rgba(206,45,13,.12);border:1px solid rgba(206,80,60,.4);
+  color:#FFB4A5;border-radius:9px;padding:10px 14px;font-size:.9rem;margin-bottom:16px}
+.login-err.show{display:block}
+.login-foot{text-align:center;margin-top:26px;color:#5c6b78;font-size:.8rem}
+
+/* ============ APP SHELL ============ */
+#app{display:none;min-height:100vh}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;height:64px;
+  background:rgba(12,18,23,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:28px;padding:0 28px}
+.topbar .brand{display:flex;align-items:center;flex-shrink:0}
+.topbar .brand img{height:20px;display:block}
+.nav{display:flex;gap:4px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{color:var(--muted);text-decoration:none;font-size:.92rem;font-weight:500;
+  padding:7px 13px;border-radius:8px;white-space:nowrap;transition:color .15s,background .15s}
+.nav a:hover{color:var(--text)}
+.nav a.active{color:var(--text);background:rgba(13,129,206,.16)}
+.userchip{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.userchip .name{font-size:.88rem;color:var(--text);white-space:nowrap}
+.badge-admin{font-size:.62rem;font-weight:700;letter-spacing:.08em;color:#fff;
+  background:var(--accent);border-radius:5px;padding:2.5px 7px}
+.btn-sair{background:transparent;border:1px solid var(--line);color:var(--muted);
+  border-radius:8px;padding:6px 14px;font-size:.85rem;transition:color .15s,border-color .15s}
+.btn-sair:hover{color:var(--text);border-color:var(--accent)}
+
+.main{padding:104px 28px 60px;max-width:1120px;margin:0 auto}
+.page{display:none}
+.page.active{display:block;animation:fadeUp .35s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){
+  .page.active{animation:none}
+  *{transition:none !important}
+}
+
+.eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.eyebrow .tag{font-size:.75rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1.title{font-size:clamp(1.7rem,3.4vw,2.3rem);font-weight:700;letter-spacing:-.01em;margin-bottom:10px}
+.lead{color:var(--muted);max-width:640px;margin-bottom:38px}
+
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:26px;display:flex;flex-direction:column;gap:14px;transition:border-color .15s,transform .15s}
+a.card{text-decoration:none;color:var(--text)}
+a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.card h3{font-size:1.15rem;font-weight:600}
+.card p{color:var(--muted);font-size:.92rem;flex:1}
+.card .cta{color:var(--accent);font-size:.88rem;font-weight:600}
+.card .count{font-size:.78rem;color:#5c6b78}
+
+/* doc list */
+.doclist{display:flex;flex-direction:column;gap:14px}
+.docitem{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:20px 24px;display:flex;align-items:center;gap:18px;text-decoration:none;color:var(--text);
+  transition:border-color .15s}
+.docitem:hover{border-color:var(--accent)}
+.docitem .info{flex:1;min-width:0}
+.docitem .info h4{font-size:1.02rem;font-weight:600;margin-bottom:3px}
+.docitem .info p{color:var(--muted);font-size:.88rem}
+.docitem .dtag{font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--accent);background:rgba(13,129,206,.12);border-radius:6px;padding:4px 10px;white-space:nowrap}
+.subsection{margin-bottom:44px}
+.subsection h2{font-size:1.25rem;font-weight:600;margin-bottom:18px;display:flex;align-items:center;gap:12px}
+
+/* empty state */
+.empty{border:1px dashed var(--line);border-radius:var(--radius);padding:52px 30px;text-align:center;color:var(--muted)}
+.empty .elo{margin-bottom:16px;opacity:.55}
+.empty strong{display:block;color:var(--text);font-family:'Inter Tight',sans-serif;font-size:1.05rem;margin-bottom:4px}
+.empty span{font-size:.9rem}
+
+/* viewer */
+#viewer{position:fixed;inset:0;z-index:60;display:none;flex-direction:column;background:var(--bg)}
+#viewer.open{display:flex}
+.viewer-bar{height:58px;flex-shrink:0;display:flex;align-items:center;gap:16px;padding:0 20px;
+  background:var(--panel);border-bottom:1px solid var(--line)}
+.viewer-bar .vtag{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.viewer-bar .vtitle{font-size:.95rem;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn-back{background:transparent;border:1px solid var(--line);color:var(--text);border-radius:8px;
+  padding:8px 16px;font-size:.88rem;font-weight:500;white-space:nowrap}
+.btn-back:hover{border-color:var(--accent)}
+#viewer iframe{flex:1;width:100%;border:none;background:#fff}
+
+/* guia */
+.guia-block{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:28px;margin-bottom:20px}
+.guia-block h2{font-size:1.2rem;margin-bottom:12px;display:flex;align-items:center;gap:12px}
+.guia-block p, .guia-block li{color:var(--muted);font-size:.95rem}
+.guia-block ul{padding-left:22px;margin-top:8px}
+.guia-block li{margin-bottom:6px}
+.btn-wa{display:inline-flex;align-items:center;gap:10px;background:#1DA851;color:#fff;text-decoration:none;
+  font-weight:600;border-radius:10px;padding:13px 24px;margin-top:14px;transition:background .15s}
+.btn-wa:hover{background:#178A42}
+.btn-wa svg{width:20px;height:20px;flex-shrink:0}
+
+.footer{border-top:1px solid var(--line);margin-top:70px;padding:34px 28px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1120px;margin-left:auto;margin-right:auto}
+.footer img{height:26px;opacity:.85}
+.footer span{color:#5c6b78;font-size:.8rem}
+
+@media (max-width:760px){
+  .topbar{gap:14px;padding:0 16px}
+  .userchip .name{display:none}
+  .main{padding:96px 16px 48px}
+  .footer{flex-direction:column;text-align:center;padding:28px 16px}
+}
+@media (max-width:640px){
+  .topbar{height:auto;flex-wrap:wrap;padding:10px 14px;row-gap:6px}
+  .topbar .brand{order:1}
+  .userchip{order:2;margin-left:auto}
+  .nav{order:3;width:100%}
+  .main{padding-top:128px}
+  .login-card{padding:34px 24px 30px}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div class="login-wrap" id="login">
+  <form class="login-card" id="loginForm" autocomplete="off">
+    <img class="logo" src="assets/cogtive_logo_offwhite.png" alt="Cogtive">
+    <p class="sub">Central do Cliente</p>
+    <div class="login-err" id="loginErr">Não foi possível entrar. Confira seu nome e senha e tente novamente.</div>
+    <div class="field">
+      <label for="inNome">Usuário</label>
+      <input id="inNome" type="text" placeholder="Nome e Sobrenome" required>
+    </div>
+    <div class="field">
+      <label for="inSenha">Senha</label>
+      <input id="inSenha" type="password" placeholder="••••••••" required>
+    </div>
+    <button class="btn" type="submit">Entrar</button>
+    <p class="login-foot">powered by Braper</p>
+  </form>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app">
+  <header class="topbar">
+    <a class="brand" href="#/home" aria-label="Início"><img src="assets/cogtive_logo_offwhite.png" alt="Cogtive"></a>
+    <nav class="nav" id="nav">
+      <a href="#/home" data-route="home">Início</a>
+      <a href="#/planejamento" data-route="planejamento">Planejamento</a>
+      <a href="#/relatorios" data-route="relatorios">Relatórios</a>
+      <a href="#/performance" data-route="performance">Performance</a>
+      <a href="#/links" data-route="links">Links Úteis</a>
+      <a href="#/guia" data-route="guia">Guia da Central</a>
+    </nav>
+    <div class="userchip">
+      <span class="name" id="chipName"></span>
+      <span class="badge-admin" id="chipAdmin" style="display:none">ADMIN</span>
+      <button class="btn-sair" id="btnSair" type="button">Sair</button>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- HOME -->
+    <section class="page" id="page-home">
+      <div class="eyebrow"><span class="elo" aria-hidden="true"><span></span><span></span></span><span class="tag">Central do Cliente</span></div>
+      <h1 class="title" id="homeGreet">Olá</h1>
+      <p class="lead">Todos os materiais da parceria Cogtive · Braper em um só lugar: planejamentos, estudos, relatórios de performance e acessos rápidos.</p>
+      <div class="grid">
+        <a class="card" href="#/planejamento">
+          <span class="elo elo--muted" aria-hidden="true"><span></span><span></span></span>
+          <h3>Planejamento</h3>
+          <p>Planejamentos estratégicos e táticos de mídia e growth.</p>
+          <span class="count" id="countPlan"></span>
+          <span class="cta">Abrir seção →</span>
+        </a>
+        <a class="card" href="#/relatorios">
+          <span class="elo elo--muted" aria-hidden="true"><span></span><span></span></span>
+          <h3>Relatórios</h3>
+          <p>Estudos aprofundados e status semanais da operação.</p>
+          <span class="count" id="countRel"></span>
+          <span class="cta">Abrir seção →</span>
+        </a>
+        <a class="card" href="#/performance">
+          <span class="elo elo--muted" aria-hidden="true"><span></span><span></span></span>
+          <h3>Performance</h3>
+          <p>Acesso ao TCI — Tráfego, Conversão e Investimento — e ao dashboard de performance.</p>
+          <span class="cta">Abrir seção →</span>
+        </a>
+        <a class="card" href="#/links">
+          <span class="elo elo--muted" aria-hidden="true"><span></span><span></span></span>
+          <h3>Links Úteis</h3>
+          <p>Controle de assets, gerador de UTM e outros acessos operacionais.</p>
+          <span class="cta">Abrir seção →</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- PLANEJAMENTO -->
+    <section class="page" id="page-planejamento">
+      <div class="eyebrow"><span class="elo" aria-hidden="true"><span></span><span></span></span><span class="tag">Planejamento</span></div>
+      <h1 class="title">Planejamento</h1>
+      <p class="lead">Documentos de estratégia e planejamento da operação de mídia e growth.</p>
+      <div id="list-plan"></div>
+    </section>
+
+    <!-- RELATORIOS -->
+    <section class="page" id="page-relatorios">
+      <div class="eyebrow"><span class="elo" aria-hidden="true"><span></span><span></span></span><span class="tag">Relatórios</span></div>
+      <h1 class="title">Relatórios</h1>
+      <p class="lead">Estudos e acompanhamentos recorrentes da performance.</p>
+      <div class="subsection">
+        <h2><span class="elo elo--muted" style="width:24px" aria-hidden="true"><span style="height:6px"></span><span style="height:6px"></span></span>Estudos</h2>
+        <div id="list-estudo"></div>
+      </div>
+      <div class="subsection">
+        <h2><span class="elo elo--muted" style="width:24px" aria-hidden="true"><span style="height:6px"></span><span style="height:6px"></span></span>Status Semanal</h2>
+        <div id="list-status"></div>
+      </div>
+    </section>
+
+    <!-- PERFORMANCE -->
+    <section class="page" id="page-performance">
+      <div class="eyebrow"><span class="elo" aria-hidden="true"><span></span><span></span></span><span class="tag">Performance</span></div>
+      <h1 class="title">Performance</h1>
+      <p class="lead">Dados de tráfego, conversão e investimento da operação — direto da fonte.</p>
+      <div class="grid">
+        <a class="card" href="https://docs.google.com/spreadsheets/d/1kmyI4eIqXwEjSZ370v_AMeWmjn2_gVOKto7aD0FN5II/edit?usp=sharing" target="_blank" rel="noopener">
+          <span class="elo elo--muted" aria-hidden="true"><span></span><span></span></span>
+          <h3>TCI · Planilha completa</h3>
+          <p>Tráfego, Conversão e Investimento 2026 — todas as abas: Overview, WoW, Pacing, Daily, MoM, audiências, criativos e bases de dados.</p>
+          <span class="cta">Abrir no Google Sheets ↗</span>
+        </a>
+        <div class="card">
+          <span class="elo elo--muted" aria-hidden="true"><span></span><span></span></span>
+          <h3>Dashboard de Performance</h3>
+          <p>Visões interativas do TCI com filtros de período, ranking de audiências e criativos, pacing e projeções. Em construção — chega na próxima atualização da Central.</p>
+          <span class="count">Em breve</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- LINKS UTEIS -->
+    <section class="page" id="page-links">
+      <div class="eyebrow"><span class="elo" aria-hidden="true"><span></span><span></span></span><span class="tag">Links Úteis</span></div>
+      <h1 class="title">Links Úteis</h1>
+      <p class="lead">Acessos operacionais do dia a dia da parceria.</p>
+      <div class="grid">
+        <a class="card" href="https://docs.google.com/spreadsheets/d/16Iy1RQvsMef-qno8ufNk3ES-BFNmoRFboYvZXeyzGUI/edit?usp=sharing" target="_blank" rel="noopener">
+          <span class="elo elo--muted" aria-hidden="true"><span></span><span></span></span>
+          <h3>Controle de Assets</h3>
+          <p>Inventário de criativos: IDs, campanhas, formatos e status de cada asset em veiculação.</p>
+          <span class="cta">Abrir no Google Sheets ↗</span>
+        </a>
+        <a class="card" href="https://docs.google.com/spreadsheets/d/11ZuHlPOh1EPhWu2GwMlISTtkvzU53G3D1mZUcfGMMCY/edit?usp=sharing" target="_blank" rel="noopener">
+          <span class="elo elo--muted" aria-hidden="true"><span></span><span></span></span>
+          <h3>Gerador de UTM</h3>
+          <p>Padronização de parâmetros de rastreamento para todas as campanhas e canais.</p>
+          <span class="cta">Abrir no Google Sheets ↗</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- GUIA -->
+    <section class="page" id="page-guia">
+      <div class="eyebrow"><span class="elo" aria-hidden="true"><span></span><span></span></span><span class="tag">Guia da Central</span></div>
+      <h1 class="title">Guia da Central</h1>
+      <p class="lead">Como usar este portal no dia a dia.</p>
+
+      <div class="guia-block">
+        <h2>O que é a Central do Cliente</h2>
+        <p>A Central reúne, em um único endereço, todos os materiais produzidos pela Braper para a Cogtive: planejamentos estratégicos, estudos, relatórios de performance e os acessos operacionais da parceria. Os documentos abrem dentro do próprio portal — sem downloads, sem anexos perdidos no e-mail.</p>
+      </div>
+
+      <div class="guia-block">
+        <h2>Como navegar</h2>
+        <ul>
+          <li><strong>Início</strong> — visão geral com atalhos para todas as seções.</li>
+          <li><strong>Planejamento</strong> — documentos de estratégia e planejamento.</li>
+          <li><strong>Relatórios</strong> — dividido em <em>Estudos</em> (análises aprofundadas) e <em>Status Semanal</em> (acompanhamento recorrente).</li>
+          <li><strong>Performance</strong> — acesso ao TCI e, em breve, ao dashboard interativo.</li>
+          <li><strong>Links Úteis</strong> — controle de assets e gerador de UTM.</li>
+        </ul>
+      </div>
+
+      <div class="guia-block">
+        <h2>Atualizações</h2>
+        <p>Novos documentos são publicados pela equipe Braper e aparecem automaticamente nas suas seções. O material mais recente fica sempre no topo de cada lista. Quando um documento relevante for publicado, você será avisado pelos canais habituais da parceria.</p>
+      </div>
+
+      <div class="guia-block">
+        <h2>Suporte</h2>
+        <p>Dúvidas sobre acesso, documentos ou qualquer assunto da Central? Fale direto com a equipe Braper.</p>
+        <a class="btn-wa" href="https://wa.me/5511995550735" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Falar com a Braper no WhatsApp
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <img src="assets/cogtive_symbol_lightblue.png" alt="Cogtive">
+    <span>Central do Cliente Cogtive · powered by Braper</span>
+  </footer>
+</div>
+
+<!-- ============ VIEWER ============ -->
+<div id="viewer" role="dialog" aria-label="Visualizador de documento">
+  <div class="viewer-bar">
+    <button class="btn-back" id="btnVoltar" type="button">← Voltar à Central</button>
+    <span class="vtag" id="vTag"></span>
+    <span class="vtitle" id="vTitle"></span>
+  </div>
+  <iframe id="vFrame" title="Documento"></iframe>
+</div>
+
+<script>
+/* =====================================================================
+   DOCS — lista de documentos publicados na Central
+   ---------------------------------------------------------------------
+   Para publicar um documento novo:
+   1) Suba o arquivo HTML na pasta docs/ (nome sem acentos/espaços,
+      padrão: cogtive_{plan|report}_{AAAAMM}_{descricao}.html)
+   2) Adicione um item na categoria certa abaixo:
+      { id:'identificador-unico',
+        titulo:'Título exibido no card',
+        tag:'JUL/2026',
+        desc:'Uma frase descrevendo o documento.',
+        arquivo:'docs/cogtive_plan_202607_exemplo.html' }
+   3) Salve (commit). O portal atualiza sozinho.
+   Categorias: plan = Planejamento · estudo = Relatórios/Estudos ·
+               status = Relatórios/Status Semanal
+   ===================================================================== */
+const DOCS = {
+  plan: [
+    // { id:'growth-v2', titulo:'Planejamento de Growth v2', tag:'JUL/2026', desc:'Estratégia de category creation: OEE & Excelência Operacional.', arquivo:'docs/cogtive_plan_202607_growth-v2.html' },
+  ],
+  estudo: [
+  ],
+  status: [
+  ]
+};
+
+/* ============ USUÁRIOS E SESSÃO (somente em memória) ============ */
+const USERS = {
+  cliente: { senha:'c0gtive2026#', nomes:['Leonardo Orpinelli','Gabriel Kessler','Thales Willian'] },
+  admin:   { senha:'braper#711#',  nomes:['Rafael Moraes','Gabriel Martins'] }
+};
+let session = null; // { nome, admin }  — nunca persiste; Sair ou refresh encerra
+
+const norm = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim().toLowerCase();
+
+function tentarLogin(nome, senha){
+  for (const [grupo, g] of Object.entries(USERS)){
+    if (senha !== g.senha) continue;
+    const hit = g.nomes.find(n => norm(n) === norm(nome));
+    if (hit) return { nome: hit, admin: grupo === 'admin' };
+  }
+  return null;
+}
+
+const $ = id => document.getElementById(id);
+
+$('loginForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const r = tentarLogin($('inNome').value, $('inSenha').value);
+  if (!r){ $('loginErr').classList.add('show'); $('inSenha').value=''; return; }
+  session = r;
+  $('loginErr').classList.remove('show');
+  $('login').style.display = 'none';
+  $('app').style.display = 'block';
+  $('chipName').textContent = r.nome;
+  $('chipAdmin').style.display = r.admin ? 'inline-block' : 'none';
+  $('homeGreet').textContent = 'Olá, ' + r.nome.split(' ')[0];
+  renderLists();
+  location.hash = '#/home';
+  route();
+});
+
+$('btnSair').addEventListener('click', () => {
+  session = null;
+  $('app').style.display = 'none';
+  $('viewer').classList.remove('open');
+  $('vFrame').src = 'about:blank';
+  $('login').style.display = 'flex';
+  $('inNome').value = ''; $('inSenha').value = '';
+  location.hash = '';
+});
+
+/* ============ RENDER DE LISTAS ============ */
+function docItem(d, cat){
+  return `<a class="docitem" href="#/doc/${d.id}" data-origin="${cat}">
+    <div class="info"><h4>${d.titulo}</h4><p>${d.desc}</p></div>
+    <span class="dtag">${d.tag}</span></a>`;
+}
+function emptyState(msg){
+  return `<div class="empty">
+    <span class="elo" aria-hidden="true"><span></span><span></span></span>
+    <strong>Nenhum documento publicado ainda</strong>
+    <span>${msg}</span></div>`;
+}
+function renderLists(){
+  $('list-plan').innerHTML = DOCS.plan.length
+    ? `<div class="doclist">${DOCS.plan.map(d=>docItem(d,'planejamento')).join('')}</div>`
+    : emptyState('Os planejamentos da parceria aparecerão aqui assim que forem publicados.');
+  $('list-estudo').innerHTML = DOCS.estudo.length
+    ? `<div class="doclist">${DOCS.estudo.map(d=>docItem(d,'relatorios')).join('')}</div>`
+    : emptyState('Os estudos aparecerão aqui assim que forem publicados.');
+  $('list-status').innerHTML = DOCS.status.length
+    ? `<div class="doclist">${DOCS.status.map(d=>docItem(d,'relatorios')).join('')}</div>`
+    : emptyState('Os status semanais aparecerão aqui assim que forem publicados.');
+  const nPlan = DOCS.plan.length, nRel = DOCS.estudo.length + DOCS.status.length;
+  $('countPlan').textContent = nPlan ? `${nPlan} documento${nPlan>1?'s':''}` : '';
+  $('countRel').textContent  = nRel  ? `${nRel} documento${nRel>1?'s':''}`  : '';
+}
+
+/* ============ ROTEADOR ============ */
+const CAT_LABEL = { plan:'Planejamento', estudo:'Relatórios · Estudos', status:'Relatórios · Status Semanal' };
+let vOrigin = '#/home';
+
+function findDoc(id){
+  for (const [cat, arr] of Object.entries(DOCS)){
+    const d = arr.find(x => x.id === id);
+    if (d) return { d, cat };
+  }
+  return null;
+}
+
+function route(){
+  if (!session){ return; }
+  const h = location.hash || '#/home';
+  const mDoc = h.match(/^#\/doc\/(.+)$/);
+  if (mDoc){
+    const hit = findDoc(decodeURIComponent(mDoc[1]));
+    if (hit){
+      $('vTag').textContent = CAT_LABEL[hit.cat];
+      $('vTitle').textContent = hit.d.titulo;
+      $('vFrame').src = hit.d.arquivo;
+      $('viewer').classList.add('open');
+      $('vFrame').addEventListener('load', () => { try{ $('vFrame').focus(); }catch(e){} }, { once:true });
+      return;
+    }
+    location.hash = '#/home'; return;
+  }
+  $('viewer').classList.remove('open');
+  $('vFrame').src = 'about:blank';
+  const page = h.replace('#/','') || 'home';
+  const valid = ['home','planejamento','relatorios','performance','links','guia'];
+  const target = valid.includes(page) ? page : 'home';
+  if (target !== 'home' || page === 'home') vOrigin = '#/' + target;
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const el = $('page-'+target);
+  if (el) el.classList.add('active');
+  document.querySelectorAll('.nav a').forEach(a =>
+    a.classList.toggle('active', a.dataset.route === target));
+  window.scrollTo({top:0, behavior:'auto'});
+}
+
+document.addEventListener('click', e => {
+  const item = e.target.closest('.docitem');
+  if (item) vOrigin = '#/' + item.dataset.origin;
+});
+$('btnVoltar').addEventListener('click', () => { location.hash = vOrigin; });
+
+window.addEventListener('hashchange', route);
+</script>
+</body>
+</html>
