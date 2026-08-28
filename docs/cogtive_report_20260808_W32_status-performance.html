@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Status de Performance · Semana 32 · Mídia Paga 2026 | Cogtive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0C1217; --bg2:#0F1820; --card:#121D26; --card2:#16242F;
+  --line:rgba(251,249,240,.08); --line-strong:rgba(251,249,240,.14);
+  --ink:#FBF9F0; --muted:#8FA1AE; --muted2:#5F7280;
+  --blue:#0D81CE; --blue-soft:#4DA9E8; --blue-dim:rgba(13,129,206,.14);
+  --teal:#2EC7A6; --teal-dim:rgba(46,199,166,.12);
+  --amber:#F5B841; --amber-dim:rgba(245,184,65,.12);
+  --violet:#9B7BF3; --violet-dim:rgba(155,123,243,.12);
+  --red:#E5655B; --red-dim:rgba(229,101,91,.12);
+  --radius:18px;
+  --shadow:0 18px 44px rgba(0,0,0,.35);
+  --font-body:'Inter',-apple-system,Segoe UI,Roboto,sans-serif;
+  --font-display:'Inter Tight','Inter',sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);line-height:1.5;font-size:15px}
+::selection{background:var(--blue);color:#fff}
+
+header{position:relative;overflow:hidden;padding:76px 24px 60px;
+  background:
+   radial-gradient(circle at 88% 8%, rgba(13,129,206,.20), transparent 40%),
+   radial-gradient(circle at 6% 92%, rgba(46,199,166,.10), transparent 45%),
+   linear-gradient(160deg,#0C1217 0%,#0E1922 100%);}
+header::before{content:"";position:absolute;inset:0;
+  background-image:linear-gradient(rgba(251,249,240,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(251,249,240,.03) 1px,transparent 1px);
+  background-size:56px 56px;pointer-events:none}
+.hero-inner{max-width:1180px;margin:0 auto;position:relative;z-index:1;text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;padding:9px 18px;border-radius:999px;
+  background:rgba(251,249,240,.05);border:1px solid var(--line-strong);
+  font-weight:700;font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:var(--blue-soft);margin-bottom:24px}
+.eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px rgba(46,199,166,.22);animation:pulse 2.2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 4px rgba(46,199,166,.22)}50%{box-shadow:0 0 0 9px rgba(46,199,166,0)}}
+h1{font-family:var(--font-display);font-size:clamp(34px,5.4vw,58px);font-weight:800;line-height:1.02;letter-spacing:-2px;margin:0 auto 18px;max-width:940px}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--blue-soft),var(--teal));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:17px;color:var(--muted);max-width:800px;margin:0 auto 30px}
+.periodo{display:inline-flex;gap:0;border:1px solid var(--line-strong);border-radius:12px;overflow:hidden;margin-bottom:34px;font-family:var(--font-mono);font-size:12px}
+.periodo div{padding:10px 18px;display:flex;flex-direction:column;gap:3px;text-align:left}
+.periodo div+div{border-left:1px solid var(--line-strong)}
+.periodo b{font-size:13px;font-weight:700;color:var(--ink)}
+.periodo span{font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted2);font-family:var(--font-body);font-weight:700}
+.periodo .full b{color:var(--teal)} .periodo .part b{color:var(--amber)}
+.hero-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;max-width:1080px;margin:0 auto}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 18px;text-align:left;box-shadow:var(--shadow)}
+.stat strong{display:block;font-family:var(--font-mono);font-size:24px;font-weight:700;letter-spacing:-.5px;margin-bottom:6px}
+.stat span{color:var(--muted);font-size:10.5px;text-transform:uppercase;font-weight:700;letter-spacing:.6px}
+.stat.hl{background:linear-gradient(150deg,rgba(13,129,206,.28),rgba(13,129,206,.10));border-color:rgba(13,129,206,.45)}
+.stat.hl strong{color:var(--blue-soft)}
+.stat.tl{background:linear-gradient(150deg,rgba(46,199,166,.22),rgba(46,199,166,.06));border-color:rgba(46,199,166,.40)}
+.stat.tl strong{color:var(--teal)}
+@media(max-width:960px){.hero-stats{grid-template-columns:repeat(2,1fr)}.periodo{flex-direction:column}.periodo div+div{border-left:none;border-top:1px solid var(--line-strong)}}
+
+nav.sticky{position:sticky;top:0;z-index:60;background:rgba(12,18,23,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);padding:11px 16px;display:flex;gap:8px;overflow-x:auto;justify-content:center;flex-wrap:wrap}
+nav.sticky a{color:var(--muted);text-decoration:none;font-weight:600;font-size:13px;padding:8px 14px;border-radius:999px;
+  border:1px solid transparent;white-space:nowrap;transition:.18s}
+nav.sticky a:hover{color:var(--ink);background:var(--card2);border-color:var(--line-strong)}
+
+section{padding:72px 24px}
+.container{max-width:1180px;margin:0 auto}
+.section-label{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:800;text-transform:uppercase;
+  letter-spacing:1.4px;color:var(--blue-soft);background:var(--blue-dim);padding:7px 14px;border-radius:999px;margin-bottom:16px}
+h2{font-family:var(--font-display);font-size:clamp(26px,3.2vw,38px);font-weight:800;line-height:1.06;letter-spacing:-1.2px;margin:0 0 12px}
+.section-intro{max-width:880px;margin-bottom:34px}
+.section-intro p{color:var(--muted);font-size:15.5px;margin:0}
+h3{font-family:var(--font-display);font-size:18px;font-weight:700;margin:0 0 8px;letter-spacing:-.3px}
+p{margin:0 0 12px}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:900px){.grid2,.grid3{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+.card .kicker{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);display:block;margin-bottom:8px}
+.chart-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.chart-title{font-family:var(--font-display);font-size:16px;font-weight:700;margin:0 0 4px}
+.chart-sub{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.5}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px}
+.legend span{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);font-weight:600}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+
+.points{display:grid;gap:14px;counter-reset:pt}
+.point{display:flex;gap:18px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;align-items:flex-start}
+.point .num{counter-increment:pt;flex:0 0 auto;width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-weight:700;font-size:15px;background:var(--blue-dim);color:var(--blue-soft);border:1px solid rgba(13,129,206,.35)}
+.point .num::before{content:counter(pt)}
+.point p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.point strong.t{font-size:15.5px;font-family:var(--font-display);letter-spacing:-.2px}
+.point.alert .num{background:var(--red-dim);color:var(--red);border-color:rgba(229,101,91,.35)}
+.point.alert{border-color:rgba(229,101,91,.30)}
+
+.gloss{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:30px}
+@media(max-width:900px){.gloss{grid-template-columns:repeat(2,1fr)}}
+.gloss div{background:var(--bg2);border:1px dashed var(--line-strong);border-radius:14px;padding:14px 16px}
+.gloss b{display:block;font-family:var(--font-mono);font-size:12.5px;color:var(--teal);margin-bottom:4px}
+.gloss span{font-size:12.5px;color:var(--muted);line-height:1.45}
+
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow)}
+table{width:100%;border-collapse:collapse;font-size:12.8px;min-width:820px}
+thead th{background:var(--card2);color:var(--muted);font-size:10.5px;text-transform:uppercase;letter-spacing:.7px;
+  font-weight:800;padding:13px 12px;text-align:right;border-bottom:1px solid var(--line-strong);white-space:nowrap}
+thead th:first-child{text-align:left}
+tbody td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:right;font-family:var(--font-mono);font-weight:500;white-space:nowrap;color:var(--ink)}
+tbody td:first-child{text-align:left;font-family:var(--font-body);font-weight:600;color:var(--ink)}
+tbody tr:hover{background:rgba(13,129,206,.06)}
+tbody tr:last-child td{border-bottom:none}
+tr.total td{background:var(--card2);font-weight:700;border-top:2px solid var(--line-strong);color:var(--ink)}
+.subtotal td{background:rgba(13,129,206,.07);font-weight:600;color:var(--ink);border-top:1px solid var(--line)}
+tr.hi td{background:rgba(46,199,166,.07)}
+tr.part td{background:rgba(245,184,65,.06)}
+td.mql,th.mql{background:rgba(13,129,206,.08)}
+td.dim{color:var(--muted2)}
+.badge{display:inline-block;font-family:var(--font-mono);font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px}
+.badge.pos{background:var(--teal-dim);color:var(--teal)}
+.badge.neg{background:var(--red-dim);color:var(--red)}
+.badge.warn{background:var(--amber-dim);color:var(--amber)}
+.badge.info{background:var(--blue-dim);color:var(--blue-soft)}
+.badge.vio{background:var(--violet-dim);color:var(--violet)}
+
+.tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.tab-btn{background:var(--card);border:1px solid var(--line-strong);color:var(--muted);font-weight:700;font-size:13.5px;
+  padding:10px 20px;border-radius:999px;cursor:pointer;transition:.18s;font-family:var(--font-body)}
+.tab-btn:hover{color:var(--ink)}
+.tab-btn.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.tab-pane{display:none}
+.tab-pane.active{display:block;animation:fadein .3s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.callout{border-left:3px solid var(--amber);background:var(--amber-dim);border-radius:0 14px 14px 0;padding:16px 18px;margin-top:18px}
+.callout.blue{border-color:var(--blue);background:var(--blue-dim)}
+.callout.teal{border-color:var(--teal);background:var(--teal-dim)}
+.callout.red{border-color:var(--red);background:var(--red-dim)}
+.callout b{display:block;margin-bottom:4px;font-family:var(--font-display)}
+.callout p{margin:0;font-size:13.5px;color:var(--muted)}
+.callout p+p{margin-top:8px}
+
+.method{background:linear-gradient(150deg,rgba(155,123,243,.14),var(--card) 60%);border:1px solid rgba(155,123,243,.40);
+  border-radius:var(--radius);padding:26px 28px;box-shadow:var(--shadow)}
+.method .tagm{display:inline-flex;align-items:center;gap:7px;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;
+  color:var(--violet);background:var(--violet-dim);padding:6px 12px;border-radius:999px;margin-bottom:14px}
+.method h3{font-size:21px;margin-bottom:10px}
+.method p{color:var(--muted);font-size:14px;max-width:820px}
+.mcompare{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center;margin-top:20px;max-width:640px}
+@media(max-width:700px){.mcompare{grid-template-columns:1fr;gap:10px}}
+.mbox{background:var(--bg2);border:1px solid var(--line-strong);border-radius:14px;padding:16px 18px}
+.mbox u{text-decoration:none;display:block;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted2);font-weight:800;margin-bottom:6px}
+.mbox b{display:block;font-family:var(--font-mono);font-size:26px;font-weight:700;letter-spacing:-1px}
+.mbox span{font-size:12px;color:var(--muted)}
+.mbox.old b{color:var(--muted)}
+.mbox.new{border-color:rgba(155,123,243,.45)}
+.mbox.new b{color:var(--violet)}
+.marrow{font-size:22px;color:var(--violet);text-align:center;font-weight:800}
+
+.change{display:flex;gap:16px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px}
+.change .ico{flex:0 0 auto;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;background:var(--teal-dim);border:1px solid rgba(46,199,166,.35)}
+.change.w .ico{background:var(--amber-dim);border-color:rgba(245,184,65,.35)}
+.change.r .ico{background:var(--red-dim);border-color:rgba(229,101,91,.35)}
+.change p{margin:4px 0 0;font-size:13.5px;color:var(--muted)}
+.next li{margin-bottom:12px;color:var(--muted);font-size:14.5px}
+.next li b{color:var(--ink)}
+
+footer{padding:70px 24px 60px;text-align:center;background:linear-gradient(160deg,#0E1922,#0C1217);border-top:1px solid var(--line)}
+footer h2{max-width:860px;margin:0 auto 14px}
+footer p{color:var(--muted);max-width:680px;margin:0 auto}
+footer .brand{margin-top:34px;font-family:var(--font-mono);font-size:12px;color:var(--muted2);letter-spacing:1px}
+svg text{font-family:var(--font-mono)}
+.statline{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}.statline:last-child{border-bottom:none}.statline span{color:var(--muted);font-size:13.5px}.statline b{color:var(--ink);font-size:15px;font-family:var(--font-mono)}
+</style>
+</head>
+<body>
+<!-- ===== HERO ===== -->
+<header>
+  <div class="hero-inner">
+    <div class="eyebrow">
+      <span><svg width="26" height="14" viewBox="0 0 26 14" fill="none"><rect x="1" y="1" width="14" height="12" rx="6" stroke="#0D81CE" stroke-width="2"/><rect x="11" y="1" width="14" height="12" rx="6" stroke="#2EC7A6" stroke-width="2"/></svg></span>
+      Cogtive · Status de Performance · Semana 32
+      <span class="dot"></span>
+    </div>
+    <h1>A W32 confirma: o novo patamar <em>veio para ficar</em>.</h1>
+    <p class="lead">Relatório semanal de mídia paga (Google Ads + Meta Ads). A Semana 32 está completa, de 02/08 a 08/08. Depois do recorde da W31, a pergunta era se o volume se sustentaria — e a resposta veio: 39 leads, praticamente repetindo a melhor semana da série, com o custo por lead do Meta caindo para o melhor nível do ano. Esta é também a última edição no recorte atual de semanas; o novo calendário está registrado ao final.</p>
+    <div class="periodo">
+      <div class="full"><b>W32 · 02/08 a 08/08</b><span>Semana completa · 7 dias</span></div>
+      <div><b>Mês corrente · agosto até 10/08</b><span>Visão de contexto do mês</span></div>
+      <div><b>Extração 11/08 · dados até D-1</b><span>Base fechada em 10/08</span></div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><strong>R$ 4.352,32</strong><span>Investido na W32 · Meta + Google</span></div>
+      <div class="stat"><strong>39</strong><span>Leads na W32</span></div>
+      <div class="stat hl"><strong>37</strong><span>MQLs na W32</span></div>
+      <div class="stat tl"><strong>R$ 111,70</strong><span>CPL Meta na semana</span></div>
+      <div class="stat"><strong>94,9%</strong><span>Leads que viraram MQL</span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="sticky">
+  <a href="#resumo">Resumo</a>
+  <a href="#semanal">Semana a semana</a>
+  <a href="#cpl">CPL e CPMQL</a>
+  <a href="#mensal">Ano mês a mês</a>
+  <a href="#canais">Por canal</a>
+  <a href="#campanhas">Campanhas W32</a>
+  <a href="#teste">Testes A/B</a>
+  <a href="#criativos">Criativos W32</a>
+  <a href="#calendario">Novo calendário</a>
+  <a href="#proximos">Próximos passos</a>
+</nav>
+
+<!-- ===== RESUMO ===== -->
+<section id="resumo">
+  <div class="container">
+    <div class="section-intro">
+      <span class="section-label">Resumo executivo</span>
+      <h2>Os 5 pontos que importam nesta semana.</h2>
+      <p>Se você só tiver dois minutos, esta é a leitura essencial da W32.</p>
+    </div>
+    <div class="points">
+      <div class="point"><span class="num"></span><div>
+        <strong class="t">O volume se sustentou: 39 leads, colado no recorde da W31.</strong>
+        <p>A dúvida natural depois de um salto de 6 para 40 leads era se o patamar se manteria. A W32 respondeu: 39 leads, com 37 MQLs. Duas semanas consecutivas na casa dos 40 confirmam que a correção do formulário produziu uma mudança estrutural, não um pico pontual.</p>
+      </div></div>
+      <div class="point"><span class="num"></span><div>
+        <strong class="t">O CPL do Meta caiu para R$ 111,70 — e agosto acumula R$ 102,25.</strong>
+        <p>Com 33 leads a partir de R$ 3.686,10 investidos, o custo por lead do canal ficou no melhor nível do ano em uma semana cheia. No acumulado de agosto (até 10/08), o CPL está em R$ 102,25 — e, como todos os leads do Meta seguem qualificando, CPL e CPMQL são o mesmo número.</p>
+      </div></div>
+      <div class="point"><span class="num"></span><div>
+        <strong class="t">A taxa de MQL ficou em 94,9% — os dois leads restantes são recentes.</strong>
+        <p>Dos 39 leads da semana, 37 já avançaram de etapa no CRM. Os 2 que ainda estão em "Novo Lead Inbound" entraram pelo WhatsApp nos últimos dias da semana e ainda estão dentro do prazo normal de tratamento — podem avançar nos próximos dias. Não há sinal de queda de qualidade.</p>
+      </div></div>
+      <div class="point"><span class="num"></span><div>
+        <strong class="t">Nos testes A/B, o placar da segunda semana inverteu — e o acumulado é empate técnico.</strong>
+        <p>Na W32, as versões originais reagiram: a COGTIVE-CORE original fez 10 conversões contra 6 da cópia. No acumulado das duas semanas, as diferenças de custo por conversão entre versões ficaram abaixo de 6% — pequenas demais para veredito. A decisão continua dependendo da camada de qualidade, via de-para.</p>
+      </div></div>
+      <div class="point"><span class="num"></span><div>
+        <strong class="t">Última edição neste recorte: o calendário de semanas muda a partir de sexta.</strong>
+        <p>Por alinhamento com a rotina de fechamento da Cogtive, os próximos reports passam a cobrir semanas de sexta a quinta, com extração na sexta pela manhã e nomenclatura "Semana". O registro completo da mudança está na seção Novo calendário.</p>
+      </div></div>
+    </div>
+    <div class="gloss">
+      <div><b>Conversão</b><span>Ato de concluir o cadastro no formulário. É o que a plataforma do Meta contabiliza.</span></div>
+      <div><b>Lead</b><span>Contato identificado que chega ao CRM — sabemos quem é a pessoa.</span></div>
+      <div><b>MQL</b><span>Lead qualificado: avançou além de "Novo Lead Inbound" no Piperun.</span></div>
+    </div>
+  </div>
+</section>
+<!-- ===== SEMANA A SEMANA ===== -->
+<section id="semanal">
+  <div class="container">
+    <div class="section-intro">
+      <span class="section-label">Visão semanal · W27 a W32</span>
+      <h2>Semana a semana: o patamar se firmou.</h2>
+      <p>Compara o volume de leads das últimas seis semanas. Duas semanas seguidas na casa dos 40 leads separam o novo patamar do histórico anterior, que oscilava entre 6 e 16.</p>
+    </div>
+
+    <div class="grid2">
+      <div class="chart-card">
+        <h5 class="chart-title">Leads por semana</h5>
+        <p class="chart-sub">A W32 registra 39 leads, praticamente repetindo o recorde da W31 (40). A sequência em degrau — patamar antigo, queda diagnosticada, salto e sustentação — é o desenho de uma correção estrutural.</p>
+        <svg viewBox="0 0 920 335" width="100%" role="img" aria-label="Leads por semana">
+          <line x1="30" y1="290" x2="890" y2="290" stroke="rgba(251,249,240,.14)"/>
+          <line x1="30" y1="230" x2="880" y2="230" stroke="rgba(251,249,240,.06)"/><text x="888" y="235" font-size="17" fill="#5F7280">10</text>
+          <line x1="30" y1="170" x2="880" y2="170" stroke="rgba(251,249,240,.06)"/><text x="888" y="175" font-size="17" fill="#5F7280">20</text>
+          <line x1="30" y1="110" x2="880" y2="110" stroke="rgba(251,249,240,.06)"/><text x="888" y="115" font-size="17" fill="#5F7280">30</text>
+          <line x1="30" y1="50" x2="880" y2="50" stroke="rgba(251,249,240,.06)"/><text x="888" y="55" font-size="17" fill="#5F7280">40</text>
+          <rect x="70" y="212" width="72" height="78" rx="6" fill="#0D81CE"/><text x="106" y="200" font-size="24" fill="#4DA9E8" text-anchor="middle" font-weight="800">13</text>
+          <rect x="212" y="200" width="72" height="90" rx="6" fill="#0D81CE"/><text x="248" y="188" font-size="24" fill="#4DA9E8" text-anchor="middle" font-weight="800">15</text>
+          <rect x="354" y="194" width="72" height="96" rx="6" fill="#0D81CE"/><text x="390" y="182" font-size="24" fill="#4DA9E8" text-anchor="middle" font-weight="800">16</text>
+          <rect x="496" y="254" width="72" height="36" rx="6" fill="#F5B841"/><text x="532" y="242" font-size="24" fill="#F5B841" text-anchor="middle" font-weight="800">6</text>
+          <rect x="638" y="50" width="72" height="240" rx="6" fill="#0D81CE"/><text x="674" y="40" font-size="24" fill="#4DA9E8" text-anchor="middle" font-weight="800">40</text>
+          <rect x="780" y="56" width="72" height="234" rx="6" fill="#2EC7A6"/><text x="816" y="46" font-size="28" fill="#2EC7A6" text-anchor="middle" font-weight="800">39</text>
+          <text x="106" y="318" font-size="18" fill="#8FA1AE" text-anchor="middle" font-weight="700">W27</text>
+          <text x="248" y="318" font-size="18" fill="#8FA1AE" text-anchor="middle" font-weight="700">W28</text>
+          <text x="390" y="318" font-size="18" fill="#8FA1AE" text-anchor="middle" font-weight="700">W29</text>
+          <text x="532" y="318" font-size="18" fill="#F5B841" text-anchor="middle" font-weight="700">W30</text>
+          <text x="674" y="318" font-size="18" fill="#8FA1AE" text-anchor="middle" font-weight="700">W31</text>
+          <text x="816" y="318" font-size="19" fill="#2EC7A6" text-anchor="middle" font-weight="800">W32</text>
+        </svg>
+        <div class="legend"><span><i style="background:#2EC7A6"></i>W32 · semana do report</span><span><i style="background:#F5B841"></i>W30 · recuo diagnosticado</span><span><i style="background:#0D81CE"></i>Demais semanas</span></div>
+      </div>
+      <div class="card">
+        <span class="kicker">Leitura da série</span>
+        <h3 style="margin-bottom:14px">Sustentação é a prova que faltava.</h3>
+        <p style="color:var(--muted);font-size:14px">Um salto isolado pode ser sorte, sazonalidade ou represamento de demanda. Duas semanas consecutivas no mesmo patamar — 40 e depois 39 — mostram outra coisa: o funil corrigido opera nesse nível de forma recorrente.</p>
+        <p style="color:var(--muted);font-size:14px">E o dado mais relevante: a W32 fez isso com investimento praticamente igual ao da W31 (R$ 3.686 contra R$ 3.718 no Meta) e custo por lead menor. Não foi preciso pagar mais para manter o volume — a eficiência melhorou na segunda semana do novo formato.</p>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:0">O histórico agora se divide em dois períodos: antes da correção do formulário (6 a 16 leads/semana) e depois dela (39 a 40). A régua de planejamento muda junto.</p>
+      </div>
+    </div>
+
+    <div style="height:18px"></div>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Semana</th><th>Período</th><th>Investimento Meta</th><th>Impressões</th><th>Cliques</th><th>Leads</th><th class="mql">MQLs</th><th class="mql">Tx. MQL</th><th>Marco</th></tr></thead>
+        <tbody>
+          <tr><td>W27</td><td class="dim">28/06 – 04/07</td><td>R$ 1.035,40</td><td>34.493</td><td>217</td><td>13</td><td class="mql">13</td><td class="mql">100%</td><td class="dim">—</td></tr>
+          <tr><td>W28</td><td class="dim">05/07 – 11/07</td><td>R$ 1.302,70</td><td>44.047</td><td>235</td><td>15</td><td class="mql">15</td><td class="mql">100%</td><td class="dim">—</td></tr>
+          <tr><td>W29</td><td class="dim">12/07 – 18/07</td><td>R$ 1.467,38</td><td>31.699</td><td>136</td><td>16</td><td class="mql">16</td><td class="mql">100%</td><td class="dim">Pico do recorte antigo</td></tr>
+          <tr><td>W30</td><td class="dim">19/07 – 25/07</td><td>R$ 1.199,29</td><td>29.793</td><td>122</td><td>6</td><td class="mql">6</td><td class="mql">100%</td><td><span class="badge warn">Recuo diagnosticado</span></td></tr>
+          <tr><td>W31</td><td class="dim">26/07 – 01/08</td><td>R$ 3.717,58</td><td>123.484</td><td>542</td><td>40</td><td class="mql">40</td><td class="mql">100%</td><td><span class="badge pos">Recorde da série</span></td></tr>
+          <tr class="hi"><td><b>W32</b></td><td class="dim">02/08 – 08/08</td><td><b>R$ 3.686,10</b></td><td>145.421</td><td>591</td><td><b>39</b></td><td class="mql"><b>37</b></td><td class="mql"><b>94,9%</b></td><td><span class="badge pos">★ Patamar sustentado</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout blue">
+      <b>Sobre a taxa de MQL de 94,9%</b>
+      <p>Dos 39 leads da W32, 37 já avançaram de etapa. Os 2 restantes entraram pelo <b style="color:var(--ink)">WhatsApp do site nos últimos dias da semana</b> e ainda estão em "Novo Lead Inbound" — dentro do fluxo normal de tratamento do comercial. É a primeira semana desde a W26 com taxa abaixo de 100%, mas o motivo é tempo de tratamento, não qualidade: nenhum lead foi descartado. O número tende a fechar em 100% nas próximas atualizações da base.</p>
+    </div>
+
+    <div class="callout teal">
+      <b>Google presente na leitura semanal outra vez</b>
+      <p>Com o export diário do canal disponível nesta edição, a semana volta a ter os dois canais: o Google investiu <b style="color:var(--ink)">R$ 666,22 na W32</b>, com 3 conversões e a campanha Institucional veiculando normalmente. O investimento total da semana (Meta + Google) foi de <b style="color:var(--ink)">R$ 4.352,32</b>. O detalhe por campanha está na seção Por canal.</p>
+    </div>
+  </div>
+</section>
+<!-- ===== CPL E CPMQL ===== -->
+<section id="cpl" style="background:var(--bg2)">
+  <div class="container">
+    <div class="section-intro">
+      <span class="section-label">Meta Ads · Custo por lead e por MQL</span>
+      <h2>CPL e CPMQL: agosto opera no melhor custo do ano.</h2>
+      <p>O custo por lead (CPL) mede quanto se investe para gerar cada contato; o custo por MQL (CPMQL), quanto custa cada lead qualificado. A relação entre os dois é o melhor termômetro de eficiência real. Análise focada no canal Meta, principal da operação. Fontes: leads e MQLs do Piperun (mar em diante) e da base anterior (jan/fev); investimento da plataforma.</p>
+    </div>
+
+    <div class="chart-card">
+      <h5 class="chart-title">Evolução mensal · CPL vs. CPMQL no Meta</h5>
+      <p class="chart-sub">A linha azul é o custo por lead; a violeta, o custo por MQL. Quando se separam, muitos leads não qualificam. Quando se sobrepõem — como acontece desde abril — cada lead que entra é qualificado.</p>
+      <svg viewBox="0 0 920 300" width="100%" role="img" aria-label="CPL vs CPMQL mensal">
+        <line x1="30" y1="260" x2="890" y2="260" stroke="rgba(251,249,240,.14)"/>
+        <line x1="30" y1="200.2" x2="880" y2="200.2" stroke="rgba(251,249,240,.06)"/><text x="886" y="205" font-size="16" fill="#5F7280">R$75</text>
+        <line x1="30" y1="140.4" x2="880" y2="140.4" stroke="rgba(251,249,240,.06)"/><text x="886" y="145" font-size="16" fill="#5F7280">R$150</text>
+        <line x1="30" y1="80.6" x2="880" y2="80.6" stroke="rgba(251,249,240,.06)"/><text x="886" y="85" font-size="16" fill="#5F7280">R$225</text>
+        <path d="M 70,191.1 L 182,53.7 L 182,235.3 L 70,243.3 Z" fill="#9B7BF3" opacity=".10"/>
+        <polyline points="70,191.1 182,53.7 294,166.5 406,158.7 518,137.1 630,122 742,116.5 854,179.7" fill="none" stroke="#9B7BF3" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+        <polyline points="70,243.3 182,235.3 294,178.3 406,158.7 518,137.1 630,122 742,116.5 854,179.7" fill="none" stroke="#0D81CE" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+        <circle cx="70" cy="191.1" r="5" fill="#0C1217" stroke="#9B7BF3" stroke-width="2.5"/>
+        <circle cx="182" cy="53.7" r="6" fill="#0C1217" stroke="#9B7BF3" stroke-width="3"/><text x="182" y="43" font-size="18" fill="#9B7BF3" text-anchor="middle" font-weight="800">R$263</text>
+        <circle cx="294" cy="166.5" r="5" fill="#0C1217" stroke="#9B7BF3" stroke-width="2.5"/>
+        <circle cx="70" cy="243.3" r="5" fill="#0C1217" stroke="#0D81CE" stroke-width="2.5"/><text x="70" y="235" font-size="16" fill="#4DA9E8" text-anchor="middle" font-weight="700">R$21</text>
+        <circle cx="182" cy="235.3" r="5" fill="#0C1217" stroke="#0D81CE" stroke-width="2.5"/>
+        <circle cx="294" cy="178.3" r="5" fill="#0C1217" stroke="#0D81CE" stroke-width="2.5"/>
+        <circle cx="406" cy="158.7" r="5" fill="#0C1217" stroke="#7B9BC4" stroke-width="2.5"/>
+        <circle cx="518" cy="137.1" r="5" fill="#0C1217" stroke="#7B9BC4" stroke-width="2.5"/>
+        <circle cx="630" cy="122" r="5" fill="#0C1217" stroke="#7B9BC4" stroke-width="2.5"/>
+        <circle cx="742" cy="116.5" r="6" fill="#0C1217" stroke="#7B9BC4" stroke-width="3"/><text x="742" y="106" font-size="17" fill="#8FA1AE" text-anchor="middle" font-weight="700">R$183</text>
+        <circle cx="854" cy="179.7" r="7" fill="#0C1217" stroke="#2EC7A6" stroke-width="3.5"/><text x="854" y="166" font-size="18" fill="#2EC7A6" text-anchor="middle" font-weight="800">R$102</text>
+        <text x="70" y="282" font-size="16" fill="#5F7280" text-anchor="middle">Jan°</text>
+        <text x="182" y="282" font-size="16" fill="#5F7280" text-anchor="middle">Fev°</text>
+        <text x="294" y="282" font-size="16" fill="#8FA1AE" text-anchor="middle">Mar</text>
+        <text x="406" y="282" font-size="16" fill="#8FA1AE" text-anchor="middle">Abr</text>
+        <text x="518" y="282" font-size="16" fill="#8FA1AE" text-anchor="middle">Mai</text>
+        <text x="630" y="282" font-size="16" fill="#8FA1AE" text-anchor="middle">Jun</text>
+        <text x="742" y="282" font-size="16" fill="#8FA1AE" text-anchor="middle">Jul</text>
+        <text x="854" y="282" font-size="16" fill="#2EC7A6" text-anchor="middle" font-weight="700">Ago*</text>
+      </svg>
+      <div class="legend"><span><i style="background:#0D81CE"></i>CPL · custo por lead</span><span><i style="background:#9B7BF3"></i>CPMQL · custo por MQL</span><span style="color:#5F7280">° Jan/Fev base anterior</span><span style="color:#5F7280">* Ago até 10/08</span></div>
+    </div>
+
+    <div style="height:18px"></div>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Mês</th><th>Investimento Meta</th><th>Leads</th><th class="mql">MQLs</th><th>Tx. Conv. (lead→MQL)</th><th>CPL</th><th class="mql">CPMQL</th><th>Distância CPL↔CPMQL</th></tr></thead>
+        <tbody>
+          <tr><td>Janeiro°</td><td>R$ 9.035,82</td><td>426</td><td class="mql">103</td><td><span class="badge neg">24,2%</span></td><td>R$ 21,21</td><td class="mql">R$ 87,73</td><td><span class="badge neg">4,1×</span></td></tr>
+          <tr><td>Fevereiro°</td><td>R$ 8.925,96</td><td>284</td><td class="mql">34</td><td><span class="badge neg">12,0%</span></td><td>R$ 31,43</td><td class="mql">R$ 262,53</td><td><span class="badge neg">8,4×</span></td></tr>
+          <tr><td>Março</td><td>R$ 10.715,38</td><td>103</td><td class="mql">90</td><td><span class="badge warn">87,4%</span></td><td>R$ 104,03</td><td class="mql">R$ 119,06</td><td><span class="badge warn">1,1×</span></td></tr>
+          <tr><td>Abril</td><td>R$ 10.832,29</td><td>84</td><td class="mql">84</td><td><span class="badge pos">100%</span></td><td>R$ 128,96</td><td class="mql">R$ 128,96</td><td><span class="badge pos">1,0× · iguais</span></td></tr>
+          <tr><td>Maio</td><td>R$ 8.603,94</td><td>55</td><td class="mql">55</td><td><span class="badge pos">100%</span></td><td>R$ 156,44</td><td class="mql">R$ 156,44</td><td><span class="badge pos">1,0× · iguais</span></td></tr>
+          <tr><td>Junho</td><td>R$ 5.797,48</td><td>33</td><td class="mql">33</td><td><span class="badge pos">100%</span></td><td>R$ 175,68</td><td class="mql">R$ 175,68</td><td><span class="badge pos">1,0× · iguais</span></td></tr>
+          <tr><td>Julho</td><td>R$ 7.490,36</td><td>41</td><td class="mql">41</td><td><span class="badge pos">100%</span></td><td>R$ 182,69</td><td class="mql">R$ 182,69</td><td><span class="badge pos">1,0× · iguais</span></td></tr>
+          <tr class="hi"><td><b>Agosto*</b></td><td>R$ 4.601,12</td><td>45</td><td class="mql">45</td><td><span class="badge pos">100%</span></td><td><b>R$ 102,25</b></td><td class="mql"><b>R$ 102,25</b></td><td><span class="badge pos">1,0× · melhor do ano</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout teal">
+      <b>Agosto reverte a tendência de encarecimento</b>
+      <p>De março a julho, o CPL do Meta subia mês a mês (R$ 104 → R$ 183), reflexo da queda de volume com investimento sustentado. Agosto quebra a curva: com o formulário corrigido, o canal já gerou <b style="color:var(--ink)">45 leads qualificados a R$ 102,25 cada</b> em dez dias — o melhor custo do ano em régua mensal, com dez dias ainda por rodar. E com 100% de qualificação, cada real investido compra lead que o comercial efetivamente trabalha.</p>
+    </div>
+
+    <div class="callout blue">
+      <b>Nota de recorte</b>
+      <p>Esta análise usa os leads de <b style="color:var(--ink)">origem Meta</b> (45 em agosto até 10/08). A tabela mensal do report mostra os leads <b style="color:var(--ink)">totais</b> do CRM (53 no mesmo período), que incluem WhatsApp, formulário do site e conteúdo. São recortes diferentes da mesma base — um mede o canal, o outro mede o inbound completo.</p>
+    </div>
+  </div>
+</section>
+<!-- ===== MENSAL ===== -->
+<section id="mensal">
+  <div class="container">
+    <div class="section-intro">
+      <span class="section-label">Consolidado 2026 · CRM</span>
+      <h2>O ano mês a mês: agosto acelera.</h2>
+      <p>Visão de contexto do CRM. Janeiro e fevereiro seguem congelados na régua antiga. De março em diante, os números vêm do export mais recente do Piperun, com a origem de cada lead detalhada. Em dez dias, agosto já alcançou 53 leads — 72% do total de julho inteiro.</p>
+    </div>
+
+    <div class="chart-card">
+      <h5 class="chart-title">Leads e MQLs por mês</h5>
+      <p class="chart-sub">Barras azuis são os leads; barras verdes, os MQLs. Julho reverteu a queda; agosto, ainda parcial, caminha para ser o melhor mês desde abril.</p>
+      <svg viewBox="0 0 920 300" width="100%" role="img" aria-label="Leads e MQLs por mês">
+        <line x1="30" y1="260" x2="890" y2="260" stroke="rgba(251,249,240,.14)"/>
+        <line x1="30" y1="206.7" x2="890" y2="206.7" stroke="rgba(251,249,240,.06)"/><text x="895" y="210" font-size="16" fill="#5F7280">100</text>
+        <line x1="30" y1="153.3" x2="890" y2="153.3" stroke="rgba(251,249,240,.06)"/><text x="895" y="157" font-size="16" fill="#5F7280">200</text>
+        <line x1="30" y1="100" x2="890" y2="100" stroke="rgba(251,249,240,.06)"/><text x="895" y="104" font-size="16" fill="#5F7280">300</text>
+        <line x1="30" y1="46.7" x2="890" y2="46.7" stroke="rgba(251,249,240,.06)"/><text x="895" y="50" font-size="16" fill="#5F7280">400</text>
+        <rect x="46" y="31.2" width="30" height="228.8" rx="5" fill="#0D81CE" opacity=".5"/><rect x="80" y="205.1" width="30" height="54.9" rx="5" fill="#2EC7A6" opacity=".5"/>
+        <text x="80" y="24" font-size="19" fill="#5F7280" text-anchor="middle" font-weight="800">429</text>
+        <rect x="154" y="105.3" width="30" height="154.7" rx="5" fill="#0D81CE" opacity=".5"/><rect x="188" y="241.9" width="30" height="18.1" rx="5" fill="#2EC7A6" opacity=".5"/>
+        <text x="188" y="98" font-size="19" fill="#5F7280" text-anchor="middle" font-weight="800">290</text>
+        <rect x="262" y="185.9" width="30" height="74.1" rx="5" fill="#0D81CE"/><rect x="296" y="194.4" width="30" height="65.6" rx="5" fill="#2EC7A6"/>
+        <text x="296" y="178" font-size="19" fill="#4DA9E8" text-anchor="middle" font-weight="700">139</text>
+        <rect x="370" y="199.7" width="30" height="60.3" rx="5" fill="#0D81CE"/><rect x="404" y="200.3" width="30" height="59.7" rx="5" fill="#2EC7A6"/>
+        <text x="404" y="192" font-size="19" fill="#4DA9E8" text-anchor="middle" font-weight="700">113</text>
+        <rect x="478" y="212" width="30" height="48" rx="5" fill="#0D81CE"/><rect x="512" y="213.6" width="30" height="46.4" rx="5" fill="#2EC7A6"/>
+        <text x="512" y="204" font-size="19" fill="#4DA9E8" text-anchor="middle" font-weight="700">90</text>
+        <rect x="586" y="229.6" width="30" height="30.4" rx="5" fill="#0D81CE"/><rect x="620" y="230.7" width="30" height="29.3" rx="5" fill="#2EC7A6"/>
+        <text x="620" y="222" font-size="19" fill="#4DA9E8" text-anchor="middle" font-weight="700">57</text>
+        <rect x="694" y="220.5" width="30" height="39.5" rx="5" fill="#0D81CE"/><rect x="728" y="220.5" width="30" height="39.5" rx="5" fill="#2EC7A6"/>
+        <text x="728" y="213" font-size="19" fill="#4DA9E8" text-anchor="middle" font-weight="700">74</text>
+        <rect x="802" y="231.7" width="30" height="28.3" rx="4" fill="#0D81CE" opacity=".85"/><rect x="836" y="232.8" width="30" height="27.2" rx="4" fill="#2EC7A6" opacity=".85"/>
+        <text x="836" y="224" font-size="19" fill="#F5B841" text-anchor="middle" font-weight="700">53</text>
+        <text x="80" y="282" font-size="16" fill="#5F7280" text-anchor="middle">Jan°</text>
+        <text x="188" y="282" font-size="16" fill="#5F7280" text-anchor="middle">Fev°</text>
+        <text x="296" y="282" font-size="16" fill="#8FA1AE" text-anchor="middle">Mar</text>
+        <text x="404" y="282" font-size="16" fill="#8FA1AE" text-anchor="middle">Abr</text>
+        <text x="512" y="282" font-size="16" fill="#8FA1AE" text-anchor="middle">Mai</text>
+        <text x="620" y="282" font-size="16" fill="#8FA1AE" text-anchor="middle">Jun</text>
+        <text x="728" y="282" font-size="16" fill="#8FA1AE" text-anchor="middle">Jul</text>
+        <text x="836" y="282" font-size="16" fill="#F5B841" text-anchor="middle">Ago*</text>
+      </svg>
+      <div class="legend"><span><i style="background:#0D81CE"></i>Leads</span><span><i style="background:#2EC7A6"></i>MQLs</span><span style="color:#5F7280">° Jan/Fev na régua antiga</span><span style="color:#5F7280">* Agosto até 10/08</span></div>
+    </div>
+
+    <div style="height:18px"></div>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Mês</th><th>Leads</th><th class="mql">MQLs</th><th class="mql">Tx. MQL</th><th>Meta Ads</th><th>Formulário site</th><th>WhatsApp site</th><th>Orgânico</th><th>Origem do dado</th></tr></thead>
+        <tbody>
+          <tr><td>Janeiro</td><td>429</td><td class="mql">103</td><td class="mql"><span class="badge neg">24,0%</span></td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">Base anterior</td></tr>
+          <tr><td>Fevereiro</td><td>290</td><td class="mql">34</td><td class="mql"><span class="badge neg">11,7%</span></td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">Base anterior</td></tr>
+          <tr><td>Março</td><td>139</td><td class="mql">123</td><td class="mql"><span class="badge pos">88,5%</span></td><td>103</td><td>15</td><td>17</td><td>4</td><td class="dim">Piperun 11/08</td></tr>
+          <tr><td>Abril</td><td>113</td><td class="mql">112</td><td class="mql"><span class="badge pos">99,1%</span></td><td>84</td><td>10</td><td>17</td><td>2</td><td class="dim">Piperun 11/08</td></tr>
+          <tr><td>Maio</td><td>90</td><td class="mql">87</td><td class="mql"><span class="badge pos">96,7%</span></td><td>55</td><td>15</td><td>16</td><td>4</td><td class="dim">Piperun 11/08</td></tr>
+          <tr><td>Junho</td><td>57</td><td class="mql">55</td><td class="mql"><span class="badge pos">96,5%</span></td><td>33</td><td>10</td><td>11</td><td>3</td><td class="dim">Piperun 11/08</td></tr>
+          <tr><td>Julho</td><td>74</td><td class="mql">74</td><td class="mql"><span class="badge pos">100%</span></td><td>41</td><td>15</td><td>16</td><td>2</td><td class="dim">Piperun 11/08</td></tr>
+          <tr class="part"><td>Agosto (até 10/08)</td><td>53</td><td class="mql">51</td><td class="mql"><span class="badge pos">96,2%</span></td><td>45</td><td>2</td><td>6</td><td>0</td><td class="dim">Piperun 11/08</td></tr>
+          <tr class="total"><td>Total mar–ago</td><td>526</td><td class="mql">502</td><td class="mql"><span class="badge info">95,4%</span></td><td>361</td><td>67</td><td>83</td><td>15</td><td class="dim">Piperun 11/08</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout teal">
+      <b>Agosto caminha para ser o melhor mês desde abril</b>
+      <p>Em dez dias, agosto acumula <b style="color:var(--ink)">53 leads — 72% de todo o mês de julho</b>. Mantido o ritmo atual (5,3 leads/dia), a projeção aritmética aponta para a faixa de 150 a 165 leads no mês, o que superaria março (139) e faria de agosto o melhor mês do ano no critério atual. Tratamos como projeção de ritmo, não como meta: a confirmação vem semana a semana.</p>
+    </div>
+
+    <div class="callout blue">
+      <b>Como ler esta tabela</b>
+      <p>Para avaliar a qualificação atual, use o recorte de março em diante: <b style="color:var(--ink)">526 leads · 502 MQLs · 95,4% de qualificação</b>. Janeiro e fevereiro vêm da base anterior, com critério de MQL diferente. Agosto aparece parcial, com dados até 10/08 — os 2 leads ainda não qualificados são recentes e seguem em tratamento.</p>
+    </div>
+  </div>
+</section>
+<!-- ===== POR CANAL ===== -->
+<section id="canais">
+  <div class="container">
+    <div class="section-intro">
+      <span class="section-label">Detalhe por canal</span>
+      <h2>Meta, Google e a origem dos leads na W32.</h2>
+      <p>A leitura separa as três camadas: conversão na plataforma, lead identificado no CRM e MQL qualificado. Nesta edição, os dois canais voltam a aparecer na visão semanal.</p>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tabgroup="canal" data-tab="c-meta">Meta Ads</button>
+      <button class="tab-btn" data-tabgroup="canal" data-tab="c-google">Google Ads</button>
+      <button class="tab-btn" data-tabgroup="canal" data-tab="c-orig">Origem dos leads</button>
+    </div>
+
+    <div class="tab-pane active" id="c-meta">
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Período</th><th>Investimento</th><th>Impressões</th><th>Cliques</th><th>CTR</th><th>Conversões (plataforma)</th><th class="mql">Leads no CRM</th></tr></thead>
+          <tbody>
+            <tr><td>Junho</td><td>R$ 5.797,48</td><td>154.234</td><td>582</td><td>0,38%</td><td class="dim">—</td><td class="mql">33</td></tr>
+            <tr><td>Julho (mês)</td><td>R$ 7.490,36</td><td>206.321</td><td>894</td><td>0,43%</td><td>42</td><td class="mql">41</td></tr>
+            <tr><td>W31 (26/07–01/08)</td><td>R$ 3.717,58</td><td>123.484</td><td>542</td><td>0,44%</td><td>29</td><td class="mql">28</td></tr>
+            <tr class="hi"><td><b>W32 (02–08/08)</b></td><td><b>R$ 3.686,10</b></td><td>145.421</td><td>591</td><td>0,41%</td><td>33</td><td class="mql"><b>33</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout teal">
+        <b>O Meta manteve o volume da W31</b>
+        <p>33 leads no CRM a partir de 33 conversões na plataforma — aproveitamento de praticamente 100% do cadastro para lead, confirmando que o formulário corrigido segue operando sem fricção. O custo por lead do canal na semana foi de <b style="color:var(--ink)">R$ 111,70</b>, abaixo do já bom patamar da W31 (R$ 132,77).</p>
+      </div>
+      <div class="callout blue">
+        <b>Conversão e lead bateram na W32</b>
+        <p>Nesta semana, as 33 conversões da plataforma corresponderam a 33 leads no CRM — alinhamento total entre as camadas. Quando as duas coincidem, é sinal de que o caminho entre o cadastro e o registro no CRM está fluindo sem perdas, exatamente o efeito que a correção do formulário buscava.</p>
+      </div>
+    </div>
+
+    <div class="tab-pane" id="c-google">
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Campanha</th><th>Investimento W32</th><th>Impressões</th><th>Cliques</th><th>CTR</th><th>CPC</th><th>Conversões</th><th>Impr. share méd.</th></tr></thead>
+          <tbody>
+            <tr><td>[Search] OEE Alta Intenção</td><td>R$ 349,47</td><td>464</td><td>43</td><td>9,27%</td><td>R$ 8,13</td><td>1</td><td>18,8%</td></tr>
+            <tr><td>[Search] Institucional 2025</td><td>R$ 140,22</td><td>252</td><td>97</td><td>38,49%</td><td>R$ 1,45</td><td>1</td><td>78,2%</td></tr>
+            <tr><td>[Search] Flow View</td><td>R$ 109,48</td><td>1.833</td><td>138</td><td>7,53%</td><td>R$ 0,79</td><td>1</td><td>9,0%</td></tr>
+            <tr><td>[Search] OEE Média Intenção</td><td>R$ 67,05</td><td>153</td><td>15</td><td>9,80%</td><td>R$ 4,47</td><td>0</td><td>47,0%</td></tr>
+            <tr class="total"><td>Total Google W32</td><td>R$ 666,22</td><td>2.702</td><td>293</td><td>10,84%</td><td>R$ 2,27</td><td>3</td><td class="dim">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout teal">
+        <b>Institucional consolidada e estável</b>
+        <p>A campanha Institucional, que voltou ao ar na W30 após a contestação, segue veiculando com folga: <b style="color:var(--ink)">CTR de 38,49% e impression share de 78,2%</b> na W32, os melhores do canal. O tema do erro 404 está definitivamente encerrado. A OEE Alta Intenção segue como a de maior investimento, mantendo o papel de motor de conversão do Google.</p>
+      </div>
+      <div class="callout blue">
+        <b>Leitura semanal do Google restabelecida</b>
+        <p>Com o export diário disponível nesta edição, a visão semanal completa dos dois canais volta ao report, como nas semanas anteriores à W31. A atribuição de leads e MQLs do Google segue consolidada mensalmente, a partir da base validada com o time da Cogtive.</p>
+      </div>
+    </div>
+
+    <div class="tab-pane" id="c-orig">
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Origem no CRM</th><th>Leads W32</th><th class="mql">MQLs W32</th><th>Participação</th><th>Atribuição</th></tr></thead>
+          <tbody>
+            <tr><td>Meta Ads (FORM-AD…)</td><td>33</td><td class="mql">33</td><td>84,6%</td><td><span class="badge pos">Rastreada</span></td></tr>
+            <tr><td>WhatsApp do site</td><td>5</td><td class="mql">3</td><td>12,8%</td><td><span class="badge warn">Sem canal de origem</span></td></tr>
+            <tr><td>Formulários do site</td><td>1</td><td class="mql">1</td><td>2,6%</td><td><span class="badge warn">Sem canal de origem</span></td></tr>
+            <tr class="total"><td>Total</td><td>39</td><td class="mql">37</td><td>100%</td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout teal">
+        <b>O Meta domina a geração — e com qualificação plena</b>
+        <p>Com 33 dos 39 leads (84,6%), o Meta é o canal central da operação, e todos os seus leads da semana qualificaram. Os 2 leads ainda em "Novo Lead Inbound" vieram do WhatsApp e são recentes. Vale lembrar que parte dos leads de WhatsApp e formulário pode ter origem em mídia paga não rastreada, como discutido nos reports anteriores.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ===== CAMPANHAS W32 ===== -->
+<section id="campanhas" style="background:var(--bg2)">
+  <div class="container">
+    <div class="section-intro">
+      <span class="section-label">Meta Ads · Semana 32</span>
+      <h2>Conversão por campanha na W32.</h2>
+      <p>Recorte de 02/08 a 08/08. COGTIVE-CORE e CORE-GERAL seguiram rodando em versão dupla (Original e Cópia). A COSMETICOS manteve-se ativa. A tabela mostra a conversão de cada versão, medida na plataforma.</p>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Campanha</th><th>Versão</th><th>Investimento</th><th>Impressões</th><th>Cliques</th><th>CTR</th><th>Conversões</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="2"><b>CORE-GERAL</b></td><td>Original</td><td>R$ 871,28</td><td>29.702</td><td>168</td><td>0,57%</td><td>9</td></tr>
+          <tr><td><span class="badge info">Teste (Cópia)</span></td><td>R$ 733,05</td><td>31.825</td><td>137</td><td>0,43%</td><td>8</td></tr>
+          <tr class="subtotal"><td colspan="2">CORE-GERAL · conceito</td><td>R$ 1.604,33</td><td>61.527</td><td>305</td><td>0,50%</td><td><b>17</b></td></tr>
+          <tr><td rowspan="2"><b>COGTIVE-CORE</b></td><td>Original</td><td>R$ 944,17</td><td>39.947</td><td>125</td><td>0,31%</td><td>10</td></tr>
+          <tr><td><span class="badge info">Teste (Cópia)</span></td><td>R$ 725,99</td><td>36.937</td><td>126</td><td>0,34%</td><td>6</td></tr>
+          <tr class="subtotal"><td colspan="2">COGTIVE-CORE · conceito</td><td>R$ 1.670,16</td><td>76.884</td><td>251</td><td>0,33%</td><td><b>16</b></td></tr>
+          <tr><td><b>COSMETICOS</b></td><td>Original</td><td>R$ 411,61</td><td>7.010</td><td>35</td><td>0,50%</td><td>0</td></tr>
+          <tr class="total"><td colspan="2">Total Meta W32</td><td>R$ 3.686,10</td><td>145.421</td><td>591</td><td>0,41%</td><td><b>33</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout teal">
+      <b>As duas campanhas-conceito mantiveram o ritmo</b>
+      <p>CORE-GERAL somou 17 conversões e COGTIVE-CORE 16 — praticamente o mesmo da W31 (15 e 13). A geração está estável e distribuída, sem dependência de uma única campanha. A COSMETICOS não converteu na semana, mantendo o perfil de baixo volume que já vinha apresentando; segue como uma das verticais em observação.</p>
+    </div>
+
+    <div class="callout blue">
+      <b>Leitura por campanha-conceito</b>
+      <p>Como as versões Original e Cópia compartilham o mesmo formulário, a conversão de cada uma é visível na plataforma, mas a origem do lead no CRM não distingue as duas com precisão. Por isso, para lead e MQL, tratamos cada campanha como um conceito único. A comparação detalhada entre as versões — que revela qual formato performa melhor em cada campanha — está na seção <a href="#teste" style="color:var(--blue-soft)">Testes A/B</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTES A/B ===== -->
+<section id="teste">
+  <div class="container">
+    <div class="section-intro">
+      <span class="section-label">Testes A/B · Original vs. Cópia · 2ª semana</span>
+      <h2>Segunda semana dos testes: o placar virou.</h2>
+      <p>Os testes de COGTIVE-CORE e CORE-GERAL entraram na segunda semana. Comparação dos 7 dias da W32, seguindo a ordem de prioridade: investimento, volume e custo por conversão, depois as métricas de apoio. Ao final, o acumulado das duas semanas.</p>
+    </div>
+
+    <div class="chart-card">
+        <h5 class="chart-title">Teste 1 · COGTIVE-CORE — <span style="color:var(--blue-soft)">a Original reagiu</span></h5>
+        <p class="chart-sub">Invertendo a W31, a original venceu na W32: 10 conversões contra 6, com custo 22% menor.</p>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>Métrica</th><th>Original</th><th>Cópia (teste)</th><th>Vantagem</th></tr></thead>
+            <tbody>
+              <tr><td><b>Investimento</b></td><td>R$ 944,17</td><td>R$ 725,99</td><td class="dim">Cópia gastou menos</td></tr>
+              <tr><td><b>Conversões</b></td><td><b>10</b></td><td>6</td><td><span class="badge info">Original · +4</span></td></tr>
+              <tr><td><b>Custo por conversão</b></td><td><b>R$ 94,42</b></td><td>R$ 121,00</td><td><span class="badge info">Original · 22% mais barato</span></td></tr>
+              <tr><td>Cliques</td><td>125</td><td>126</td><td><span class="badge warn">Empate técnico</span></td></tr>
+              <tr><td>CTR (link)</td><td>0,31%</td><td>0,34%</td><td><span class="badge pos">Cópia</span></td></tr>
+              <tr><td>Impressões</td><td>39.947</td><td>36.937</td><td><span class="badge info">Original</span></td></tr>
+              <tr><td>Alcance</td><td>37.999</td><td>34.393</td><td><span class="badge info">Original</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    <div style="height:18px"></div>
+
+    <div class="chart-card">
+        <h5 class="chart-title">Teste 2 · CORE-GERAL — <span style="color:#B49BF7">quase empate, leve vantagem da Cópia</span></h5>
+        <p class="chart-sub">Placar apertado: original com mais conversões, cópia com custo por conversão um pouco menor.</p>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>Métrica</th><th>Original</th><th>Cópia (teste)</th><th>Vantagem</th></tr></thead>
+            <tbody>
+              <tr><td><b>Investimento</b></td><td>R$ 871,28</td><td>R$ 733,05</td><td class="dim">Cópia gastou menos</td></tr>
+              <tr><td><b>Conversões</b></td><td><b>9</b></td><td>8</td><td><span class="badge info">Original · +1</span></td></tr>
+              <tr><td><b>Custo por conversão</b></td><td>R$ 96,81</td><td><b>R$ 91,63</b></td><td><span class="badge pos">Cópia · 5% mais barato</span></td></tr>
+              <tr><td>Cliques</td><td>168</td><td>137</td><td><span class="badge info">Original</span></td></tr>
+              <tr><td>CTR (link)</td><td>0,57%</td><td>0,43%</td><td><span class="badge info">Original</span></td></tr>
+              <tr><td>Impressões</td><td>29.702</td><td>31.825</td><td><span class="badge pos">Cópia</span></td></tr>
+              <tr><td>Alcance</td><td>25.530</td><td>26.034</td><td><span class="badge pos">Cópia</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    <div class="callout teal" style="margin-top:20px">
+      <b>O placar acumulado das duas semanas: empate técnico</b>
+      <p>Somando W31 e W32, as diferenças de custo por conversão entre Original e Cópia ficaram pequenas em ambas as campanhas — o que confirma que nenhum formato é claramente superior no critério de conversão:</p>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Campanha · versão</th><th>Investimento (2 sem.)</th><th>Conversões (2 sem.)</th><th>Custo por conversão</th><th>Situação</th></tr></thead>
+        <tbody>
+          <tr><td>COGTIVE-CORE · Original</td><td>R$ 1.818,06</td><td>16</td><td>R$ 113,63</td><td><span class="badge warn">Diferença de 2%</span></td></tr>
+          <tr><td>COGTIVE-CORE · Cópia</td><td>R$ 1.441,35</td><td>13</td><td>R$ 110,87</td><td><span class="badge warn">Diferença de 2%</span></td></tr>
+          <tr><td>CORE-GERAL · Original</td><td>R$ 1.758,28</td><td>18</td><td>R$ 97,68</td><td><span class="badge warn">Diferença de 5%</span></td></tr>
+          <tr><td>CORE-GERAL · Cópia</td><td>R$ 1.440,81</td><td>14</td><td>R$ 102,91</td><td><span class="badge warn">Diferença de 5%</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout blue">
+      <b>Ainda nada conclusivo — e agora sabemos por quê</b>
+      <p>Duas semanas de dados mostram que <b style="color:var(--ink)">o placar oscila</b>: a Cópia venceu a COGTIVE-CORE na W31 e perdeu na W32; a CORE-GERAL ficou dividida. As diferenças acumuladas de custo por conversão (2% a 5%) estão dentro da margem de variação natural entre semanas. Isso reforça a decisão de <b style="color:var(--ink)">manter os quatro braços ativos</b> e trazer a camada que realmente decide: a qualidade dos leads de cada versão, via análise de de-para. Volume e custo estão empatados; a qualificação será o critério de desempate.</p>
+    </div>
+  </div>
+</section>
+<!-- ===== CRIATIVOS W32 ===== -->
+<section id="criativos">
+  <div class="container">
+    <div class="section-intro">
+      <span class="section-label">Criativos · Semana 32</span>
+      <h2>Os criativos que sustentaram a semana.</h2>
+      <p>Como as versões Original e Cópia rodam os mesmos anúncios, os números somam a veiculação de cada criativo nas duas versões. Conversões vêm da plataforma.</p>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Criativo</th><th>Campanha</th><th>Investimento</th><th>Impressões</th><th>Cliques</th><th>CTR</th><th>Conversões</th><th>Avaliação</th></tr></thead>
+        <tbody>
+          <tr><td>A76</td><td class="dim">CORE-GERAL</td><td>R$ 1.568,09</td><td>61.168</td><td>300</td><td>0,49%</td><td>17</td><td><span class="badge pos">★ Motor da semana</span></td></tr>
+          <tr><td>A89</td><td class="dim">COGTIVE-CORE</td><td>R$ 1.497,92</td><td>73.437</td><td>237</td><td>0,32%</td><td>15</td><td><span class="badge pos">Segundo maior volume</span></td></tr>
+          <tr><td>A99</td><td class="dim">COSMETICOS</td><td>R$ 411,61</td><td>7.010</td><td>35</td><td>0,50%</td><td>0</td><td><span class="badge info">Sem conversão na semana</span></td></tr>
+          <tr><td>A93</td><td class="dim">COGTIVE-CORE</td><td>R$ 93,90</td><td>1.269</td><td>7</td><td>0,55%</td><td>0</td><td><span class="badge info">Volume menor</span></td></tr>
+          <tr><td>A90</td><td class="dim">COGTIVE-CORE</td><td>R$ 76,40</td><td>2.136</td><td>7</td><td>0,33%</td><td>1</td><td><span class="badge info">Volume menor</span></td></tr>
+          <tr><td>A75</td><td class="dim">CORE-GERAL</td><td>R$ 36,24</td><td>359</td><td>5</td><td>1,39%</td><td>0</td><td><span class="badge info">Melhor CTR · baixo volume</span></td></tr>
+          <tr><td>A91</td><td class="dim">COGTIVE-CORE</td><td>R$ 1,94</td><td>42</td><td>0</td><td>0,00%</td><td>0</td><td><span class="badge info">Verba residual</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout teal">
+      <b>A76 e A89 seguem como base da operação</b>
+      <p>Os dois criativos concentraram <b style="color:var(--ink)">32 das 33 conversões da semana</b> (A76 com 17, A89 com 15) — a mesma dupla que ancorou a W31. A consistência dos dois entre semanas é um ativo: são criativos maduros, com performance previsível, que dão estabilidade à operação. Vale começar a preparar variações antes que a frequência de exibição comece a desgastá-los.</p>
+    </div>
+
+    <div class="callout blue">
+      <b>Nota metodológica</b>
+      <p>Os valores somam a veiculação de cada criativo nas versões Original e Cópia. Conversões vêm do relatório da plataforma; o nome da campanha é extraído da taxonomia do anúncio. Criativos com investimento residual refletem sobras de veiculação de anúncios em ajuste durante a semana.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== NOVO CALENDARIO ===== -->
+<section id="calendario" style="background:var(--bg2)">
+  <div class="container">
+    <div class="section-intro">
+      <span class="section-label">Registro · Mudança de calendário</span>
+      <h2>A partir da próxima edição, a semana muda de recorte.</h2>
+      <p>Para alinhar os reports à rotina de fechamento da Cogtive, o calendário de semanas será ajustado. Este registro fica documentado para que a transição seja clara e não gere dúvida na comparação entre edições.</p>
+    </div>
+
+    <div class="grid2" style="gap:14px">
+      <div class="change"><div class="ico">📅</div><div>
+        <h3>Novo recorte: sexta a quinta</h3>
+        <p>As semanas passam a ser contadas de sexta-feira a quinta-feira, acompanhando o ciclo de fechamento semanal que a Cogtive já pratica às sextas. A extração dos dados fechados será feita na sexta pela manhã, para geração do report na sequência.</p>
+      </div></div>
+      <div class="change"><div class="ico">🔤</div><div>
+        <h3>Nova nomenclatura: "Semana"</h3>
+        <p>A identificação deixa de usar "W" e passa a "Semana": Semana 1, Semana 2, e assim por diante. A próxima edição será a primeira no novo formato, iniciando a contagem alinhada ao calendário de fechamento do cliente.</p>
+      </div></div>
+      <div class="change w"><div class="ico">🔁</div><div>
+        <h3>Esta é a última edição no recorte atual</h3>
+        <p>A W32 encerra a série no formato domingo a sábado com nomenclatura "W". Os números históricos apresentados aqui seguem válidos como base de comparação; a leitura futura apenas passa a usar o novo recorte de dias.</p>
+      </div></div>
+      <div class="change"><div class="ico">📊</div><div>
+        <h3>A estrutura do report permanece</h3>
+        <p>O modelo de status e performance continua o mesmo: resumo, evolução semanal, CPL e CPMQL, visão mensal, canais, campanhas, testes e criativos. Muda o recorte de dias e o nome — não a profundidade nem a metodologia da análise.</p>
+      </div></div>
+    </div>
+
+    <div class="callout blue">
+      <b>Por que a mudança faz sentido</b>
+      <p>Fechar a semana na quinta e reportar na sexta coloca o report em sincronia com o momento em que a Cogtive efetivamente revisa seus resultados. Isso torna a leitura mais útil no dia a dia do cliente e evita a defasagem de apresentar, no meio da semana seguinte, dados que o time já discutiu internamente na sexta anterior.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROXIMOS PASSOS ===== -->
+<section id="proximos">
+  <div class="container">
+    <div class="section-intro">
+      <span class="section-label">Próximos passos</span>
+      <h2>O que fazer na primeira Semana do novo calendário.</h2>
+    </div>
+    <div class="grid2" style="gap:14px;margin-bottom:22px">
+      <div class="change"><div class="ico">🎯</div><div>
+        <h3>Conduzir o de-para de qualidade</h3>
+        <p>Com dois testes empatados em volume e custo, a qualidade dos leads de cada versão é o critério de desempate. Extrair a base manual e cruzar com o estágio de qualificação. Pauta principal.</p>
+      </div></div>
+      <div class="change"><div class="ico">📈</div><div>
+        <h3>Confirmar a projeção de agosto</h3>
+        <p>Agosto caminha para superar 150 leads. Acompanhar semana a semana para confirmar o ritmo e, se sustentado, registrar como o melhor mês do ano no critério atual.</p>
+      </div></div>
+      <div class="change"><div class="ico">🧭</div><div>
+        <h3>Trabalhar as quatro verticais</h3>
+        <p>Avançar com Cosméticos, Farma, Têxtil e Químico. A COSMETICOS segue com baixo volume e merece revisão de criativo; as demais entram conforme a definição de estrutura e verba.</p>
+      </div></div>
+      <div class="change"><div class="ico">🎬</div><div>
+        <h3>Preparar variações de A76 e A89</h3>
+        <p>Os dois criativos que sustentam a conta rodam há várias semanas. Produzir variações antes que a frequência de exibição desgaste a performance, mantendo o pipeline criativo saudável.</p>
+      </div></div>
+    </div>
+    <div class="card">
+      <ol class="next" style="margin:0;padding-left:20px">
+        <li><b>De-para de qualidade por versão</b> — com os testes empatados em conversão e custo, medir a qualificação dos leads de Original vs. Cópia em cada campanha para decidir qual formato consolidar.</li>
+        <li><b>Confirmar o ritmo de agosto</b> — o mês projeta superar 150 leads; acompanhar a sustentação semana a semana no novo calendário.</li>
+        <li><b>Verticais em foco — Cosméticos, Farma, Têxtil e Químico</b> — revisar o criativo da COSMETICOS (baixo volume) e definir estrutura e verba para as verticais ainda não ativas.</li>
+        <li><b>Renovação criativa</b> — produzir variações de A76 e A89 antes que a frequência derrube a performance da dupla que sustenta a conta.</li>
+        <li><b>Escalar conforme a qualidade</b> — após o de-para, distribuir o investimento entre versões com base em qualificação, não só em volume e custo.</li>
+        <li><b>Parametrizar origem nos formulários do site</b> — segue como melhoria de atribuição: parte dos leads de WhatsApp e formulário pode ter origem em mídia paga não rastreada.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <h2>W32: o novo patamar se confirmou, com o melhor custo por lead do ano.</h2>
+  <p>Trinta e nove leads, praticamente repetindo o recorde da semana anterior, com o CPL do Meta caindo para R$ 111,70 na semana e R$ 102,25 no acumulado de agosto. Duas semanas de sustentação transformam o salto da W31 em novo padrão da operação. Esta é a última edição no recorte atual — a partir da próxima, o report passa a fechar de sexta a quinta.</p>
+  <div class="brand">COGTIVE × BRAPER · STATUS DE PERFORMANCE · SEMANA 32 (02–08/08) · EXTRAÇÃO 11/08/2026 · DADOS ATÉ 10/08/2026</div>
+</footer>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var group = btn.getAttribute('data-tabgroup');
+    var target = btn.getAttribute('data-tab');
+    document.querySelectorAll('.tab-btn[data-tabgroup="'+group+'"]').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    var pane = document.getElementById(target);
+    var container = pane.parentElement;
+    container.querySelectorAll(':scope > .tab-pane').forEach(function(p){ p.classList.remove('active'); });
+    pane.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
